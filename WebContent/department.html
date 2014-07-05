@@ -3,7 +3,7 @@
 <head>
 	<meta charset=utf-8>
 	<title>curepathway</title>
-	<link href="css/vendor/bootstrap.css" rel="stylesheet">
+	<link href="bootstrap-3.2.0-dist/css/bootstrap.css" rel="stylesheet">
 	<style type="text/css">
 	.row h2 { margin-top: 0px; }
 	</style>
@@ -19,28 +19,45 @@
 			<h2>Пацієнти</h2>
 		</div>
 		<div class="col-md-4">
-			<!--Sidebar content-->
-			Пошук: <input ng-model="query">
-			<ul class="patients">
-				<li ng-repeat="patient in patients | filter:query">
-					<a href="{{patient.url}}">{{patient.name}}</a>, 
-					<span>Дз: {{patient.diagnosis}}</span>
-				</li>
+
+			<ul id="patientsTab" class="nav nav-tabs">
+				<li class="active"><a href="#patient_seek" data-toggle="tab">Пошук</a></li>
+				<li><a href="#patient_new" data-toggle="tab">Новий</a></li>
 			</ul>
+			<div id="patientsTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="patient_seek">
+					<!--Sidebar content-->
+					Пошук: <input ng-model="query">
+					<ul class="patients">
+						<li ng-repeat="patient in patients | filter:query">
+							<a href="{{patient.url}}">{{patient.name}}</a>,
+							<span>Дз: {{patient.diagnosis}}</span>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-pane fade " id="patient_new">
+					<p>patient_new</p>
+				</div>
+			</div>
+
 			
 		</div>
 		<div class="col-md-2">
 			<h2>Відділення</h2>
 		</div>
 	</div>
-	<script src="js/vendor/angular.js"></script>
+
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="bootstrap-3.2.0-dist/js/bootstrap.js"></script>
+	<script src="angular-1.2.19/angular.min.js"></script>
 	<script src="db/patients.js"></script>
 	<script type="text/javascript">
 	var cuwyApp = angular.module('cuwyApp', []);
 
 	cuwyApp.controller('PatientListCtrl',['$scope', function ($scope) {
-	  $scope.patients = patients;
+		$scope.patients = patients;
 	}]);
 	</script>
+
 </body>
 </html>
