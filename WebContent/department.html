@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="cuwyApp" ng-controller="PatientListCtrl">
 <head>
 	<meta charset=utf-8>
 	<title>curepathway</title>
 	<link href="css/vendor/bootstrap.css" rel="stylesheet">
 	<style type="text/css">
-	.row h2 {
-		margin-top: 0px;
-	}
+	.row h2 { margin-top: 0px; }
 	</style>
 </head>
 <body>
@@ -20,16 +18,29 @@
 		<div class="col-md-2">
 			<h2>Пацієнти</h2>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-4">
 			<!--Sidebar content-->
 			Пошук: <input ng-model="query">
-			<div>
-				<a href="patient.html">Петренко</a>
-			</div>
-			<div>Іванчишин</div>
-			<div>Сидорчук</div>
+			<ul class="patients">
+				<li ng-repeat="patient in patients | filter:query">
+					<a href="{{patient.url}}">{{patient.name}}</a>, 
+					<span>Дз: {{patient.diagnosis}}</span>
+				</li>
+			</ul>
+			
+		</div>
+		<div class="col-md-2">
+			<h2>Відділення</h2>
 		</div>
 	</div>
+	<script src="js/vendor/angular.js"></script>
+	<script src="db/patients.js"></script>
+	<script type="text/javascript">
+	var cuwyApp = angular.module('cuwyApp', []);
 
+	cuwyApp.controller('PatientListCtrl',['$scope', function ($scope) {
+	  $scope.patients = patients;
+	}]);
+	</script>
 </body>
 </html>
