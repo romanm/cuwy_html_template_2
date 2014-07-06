@@ -27,7 +27,8 @@
 			<div id="patientsTabContent" class="tab-content">
 				<div class="tab-pane fade in active" id="patient_seek">
 					<!--Sidebar content-->
-					Пошук: <input ng-model="query">
+					Пошук: 
+					<input ng-model="query">
 					<ul class="patients">
 						<li ng-repeat="patient in patients | filter:query">
 							<a href="{{patient.url}}">{{patient.name}}</a>,
@@ -39,7 +40,9 @@
 					<p>patient_new</p>
 				</div>
 			</div>
-
+<!-- 
+http://twbs.site-konstruktor.com.ua/javascript/#tabs
+ -->
 			
 		</div>
 		<div class="col-md-2">
@@ -50,13 +53,20 @@
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="bootstrap-3.2.0-dist/js/bootstrap.js"></script>
 	<script src="angular-1.2.19/angular.min.js"></script>
-	<script src="db/patients.js"></script>
 	<script type="text/javascript">
 	var cuwyApp = angular.module('cuwyApp', []);
 
-	cuwyApp.controller('PatientListCtrl',['$scope', function ($scope) {
-		$scope.patients = patients;
-	}]);
+	cuwyApp.controller('PatientListCtrl',['$scope', '$http', function ($scope, $http) {
+		$http({
+				method : 'GET',
+				url : 'db/patients.json'
+			}).success(function(data, status, headers, config) {
+				$scope.patients = data;
+			}).error(function(data, status, headers, config) {
+				console.log("db/patients.json read ERROR");
+			});
+
+	} ]);
 	</script>
 
 </body>
